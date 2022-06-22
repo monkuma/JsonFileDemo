@@ -33,20 +33,27 @@ class MainActivity : AppCompatActivity() {
         categoriesIds.forEach { print(it.toString() + " ") }
         println()
 
-        val contentId:Array<Int> = searchContentId(cityId, categoriesIds)
-        print("抽出されたのContentsIDは : ")
-        contentId.forEach { print(it.toString() + " ") }
+        val contentsIdAndArticleId:Array<Array<Int>> = searchContentIdAndArticleId(cityId, categoriesIds)
+        for(c in contentsIdAndArticleId){
+            println("ContentID and ArticleID 2次元配列　：" + c.contentToString())
+        }
+
+        var contentsId: Array<Int>  = contentsIdAndArticleId[0]
+        var aticleId: Array<Int>  = contentsIdAndArticleId[1]
+        println("Content_ID : " + contentsId.contentToString() + "  Article_ID : " + aticleId.contentToString())
         println()
 
     }
 
-    private fun searchContentId(cityId: Int, categoriesIds:Array<Int>):Array<Int>{
+    private fun searchContentIdAndArticleId(cityId: Int, categoriesIds:Array<Int>):Array<Array<Int>>{
         val contentsFile = assetManager.open("Contents.json") //Contents Jsonファイル
         val contentsBR = BufferedReader(InputStreamReader(contentsFile))
         val contentsString: String = contentsBR.readText() //データ
         val contentsArray = JSONArray(contentsString)
 
         var contentsId: Array<Int>  = arrayOf()
+        var aticleId: Array<Int>  = arrayOf()
+        var contentsIdAndArticleId: Array<Array<Int>>  = arrayOf<Array<Int>>()
 
         for(i in 0 until contentsArray.length()) {
             val content = contentsArray.getJSONObject(i)
@@ -57,15 +64,22 @@ class MainActivity : AppCompatActivity() {
                 val contentId = content.getInt("content_id")
 
                 categoriesIds.forEach {
-                    var categoryId = content.getInt("category_id")
-                    if (categoryId.equals(it)) {
+                    var category_id = content.getInt("category_id")
+
+                    if (category_id.equals(it)) {
                         println("CityIDとCategoryIDによって抽出されたcontent ID : " + contentId)
                         contentsId+= contentId
+
+                        var article_Id = content.getInt("article_id")
+                        aticleId+= article_Id
+                        println("CityIDとCategoryIDによって抽出されたarticle ID : " + article_Id)
                     }
                 }
             }
         }
-        return contentsId
+
+        contentsIdAndArticleId = arrayOf(contentsId, aticleId)
+        return contentsIdAndArticleId
     }
 
     private fun searchCategoryId(vararg selectedCategories: String):Array<Int>{
