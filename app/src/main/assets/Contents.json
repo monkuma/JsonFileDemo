@@ -1,0 +1,16 @@
+[
+  {
+    "content_id": 1,
+    "category_id": 1,
+    "city_id": 1,
+    "article_id": 1,
+    "voice_id" : 1
+  },
+  {
+    "content_id": 2,
+    "category_id": 2,
+    "city_id": 1,
+    "article_id": 2,
+    "voice_id" : 1
+  }
+]

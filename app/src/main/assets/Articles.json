@@ -1,0 +1,16 @@
+[
+  {
+    "article_id": 1,
+    "name": "Shuri-jo",
+    "description": "Hello Shuri-jo. This is sample text",
+    "url": "yahoo.co.jp",
+    "image": "none"
+  },
+  {
+    "article_id": 2,
+    "name": "Katsuren-jo",
+    "description": "Hello Katsuren-jo. This is sample text",
+    "url": "google.co.jp",
+    "image": "none"
+  }
+]
