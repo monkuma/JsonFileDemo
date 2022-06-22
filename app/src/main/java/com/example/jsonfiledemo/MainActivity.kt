@@ -22,23 +22,22 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         assetManager = resources.assets //アセット呼び出し
-        var testCity = "那覇市"
-        var cityId:Int = searchCityId(testCity)
+        val testCity:String = "那覇市"
+        val cityId:Int = searchCityId(testCity)
         println(testCity + "のIDは : " + cityId)
 
-        var testCategory:Array<String> = arrayOf("history", "trivia")
-        var categoriesIds: Array<Int> = searchCategoryId(*testCategory)
+        val testCategory:Array<String> = arrayOf("history", "trivia")
+        val categoriesIds: Array<Int> = searchCategoryId(*testCategory)
         testCategory.forEach { print(it + " ") }
         print("のIDは : ")
         categoriesIds.forEach { print(it.toString() + " ") }
         println()
 
-        var contentId:Array<Int> = searchContentId(cityId, categoriesIds)
+        val contentId:Array<Int> = searchContentId(cityId, categoriesIds)
+        print("抽出されたのContentsIDは : ")
+        contentId.forEach { print(it.toString() + " ") }
 
     }
-
-
-
 
     private fun searchContentId(cityId: Int, categoriesIds:Array<Int>):Array<Int>{
         val contentsFile = assetManager.open("Contents.json") //Contents Jsonファイル
@@ -48,7 +47,7 @@ class MainActivity : AppCompatActivity() {
 
         var contentsId: Array<Int>  = arrayOf<Int>()
 
-        for(i in 0 until contentsArray.length()){
+        for(i in 0 until contentsArray.length()) {
             var content = contentsArray.getJSONObject(i)
             var contentCityId = content.getInt("city_id")
             println("Contents.json : " + content)
@@ -62,27 +61,24 @@ class MainActivity : AppCompatActivity() {
                         contentsId+= contentId
                     }
                 }
-
             }
-
         }
+        print("抽出されたContentsIDは : ")
         return contentsId
     }
 
     private fun searchCategoryId(vararg selectedCategories: String):Array<Int>{
-        var selectedCategoryName: Array<String> = arrayOf(*selectedCategories)
+        val selectedCategoryName: Array<String> = arrayOf(*selectedCategories)
 
         var categoriesId: Array<Int>  = arrayOf<Int>()
 
-        var categoriesArray = setOf<String>("history", "trivia", "tourist_sights", "restaurants")
+        val categoriesArray = setOf<String>("history", "trivia", "tourist_sights", "restaurants")
 
         selectedCategoryName.forEach {
             var id = categoriesArray.indexOf(it)+1
             categoriesId+=id
         }
         return categoriesId
-
-
 
 //        val categories = assetManager.open("Categories.json") //Categories Jsonファイル
 //        val category = BufferedReader(InputStreamReader(categories))
@@ -125,7 +121,7 @@ class MainActivity : AppCompatActivity() {
         val cityStr: String = city.readText() //データ
         val citiesJsonArray = JSONArray(cityStr)
 
-        var selectedCitiyName:String = selectedCitiy
+        val selectedCitiyName:String = selectedCitiy
         var selectedCityId:Int
 
         for(i in 0 until citiesJsonArray.length()){
@@ -135,11 +131,7 @@ class MainActivity : AppCompatActivity() {
                 selectedCityId = citiesJsonArray.getJSONObject(i).getInt("id")
                 return selectedCityId
             }
-
         }
-
         return 0
     }
-
-
 }

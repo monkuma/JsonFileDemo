@@ -12,5 +12,13 @@
     "city_id": 1,
     "article_id": 2,
     "voice_id" : 1
+  },
+  {
+    "content_id": 3,
+    "category_id": 2,
+    "city_id": 2,
+    "article_id": 3,
+    "voice_id" : 2
   }
+
 ]
